@@ -1,30 +1,5 @@
 # Metacritic App - React Native con TypeScript
 
-Esta aplicación ha sido migrada exitosamente de JavaScript a TypeScript para mejorar la robustez del código y la experiencia de desarrollo.
-
-```typescript
-// Interfaces principales
-interface Game {
-  title: string;
-  score: number;
-  releaseDate: string;
-  description: string;
-  slug: string;
-  image: string;
-}
-
-interface GameCardProps {
-  game: Game;
-  onPress?: (game: Game) => void;
-}
-
-// Tipos para React Navigation
-type RootTabParamList = {
-  Home: undefined;
-  Games: undefined;
-};
-```
-
 ### Scripts Disponibles
 
 ```bash
@@ -63,13 +38,6 @@ npm run lint
 # Verificar tipos de TypeScript
 npx tsc --noEmit
 ```
-
-### Dependencias TypeScript
-
-El proyecto ya incluye todas las dependencias necesarias:
-- `typescript: "~5.8.3"`
-- `@types/react: "~19.0.10"`
-- `@types/react-native: "^0.72.8"`
 
 ### 🚀 Configuración y Ejecución con Expo
 
@@ -132,3 +100,34 @@ expo start --port 19000
 # Ver logs en tiempo real
 expo logs
 ```
+
+### 🎨 Tailwind CSS con NativeWind
+
+El proyecto está **completamente configurado** para usar Tailwind CSS con NativeWind:
+
+#### ✅ Configuración Incluida:
+- `babel.config.js` - Plugin de NativeWind configurado
+- `tailwind.config.js` - Configuración optimizada para React Native
+- `types/nativewind.d.ts` - Tipos de TypeScript para NativeWind
+- Colores personalizados del tema integrados
+
+#### 📦 Dependencias Instaladas:
+- `nativewind: "^4.1.23"`
+- `tailwindcss: "3.3.2"`
+
+#### 🚀 Uso Inmediato:
+```tsx
+<View className="flex-1 bg-white p-4">
+  <Text className="text-lg font-bold text-primary">
+    ¡Tailwind funcionando!
+  </Text>
+</View>
+```
+
+#### 🎨 Colores del Tema Disponibles:
+- `bg-primary`, `text-primary`
+- `bg-secondary`, `text-secondary`
+- `bg-accent`, `text-accent`
+- `bg-error`, `bg-success`, `bg-warning`
+
+**📖 Guía completa:** [TAILWIND_GUIDE.md](./TAILWIND_GUIDE.md)
