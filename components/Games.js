@@ -1,5 +1,5 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View, ActivityIndicator, TouchableOpacity, ScrollView } from 'react-native';
+import { StyleSheet, Text, View, ActivityIndicator, TouchableOpacity, ScrollView, FlatList } from 'react-native';
 import { useState, useEffect } from 'react';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { getLatestGames } from '../lib/metacritic';
@@ -34,7 +34,7 @@ export default function Games() {
 
   const handleGamePress = (game) => {
     console.log('Game pressed:', game.title);
-    // Aquí puedes agregar navegación a detalles del juego
+    // Agregar navegación a detalles del juego
     alert(`Seleccionaste: ${game.title}\nScore: ${game.score}`);
   };
 
@@ -65,12 +65,20 @@ export default function Games() {
         <Text style={styles.title}>Juegos</Text>
         <Text style={styles.subtitle}>{games.length} juegos disponibles</Text>
       </View>
+      {/* Se debe usar FlatList para mostrar los juegos, ya que es más eficiente que ScrollView debido a que no se renderiza todo el contenido de la lista, sino que se renderiza solo el contenido visible.
       <ScrollView 
         style={styles.scrollView} 
         contentContainerStyle={styles.scrollContent}
         showsVerticalScrollIndicator={false}
-      >
-        {games.length === 0 ? (
+      > */}
+      <FlatList
+        data={games}
+        renderItem={({ item }) => (
+          <GameCard game={item} onPress={() => handleGamePress(item)} />
+        )}
+        keyExtractor={(item) => item.slug}
+      />
+        {/* {games.length === 0 ? (
           <View style={styles.emptyContainer}>
             <Text style={styles.noDataText}>No se encontraron juegos</Text>
           </View>
@@ -83,7 +91,7 @@ export default function Games() {
             />
           ))
         )}
-      </ScrollView>
+      </ScrollView> */}
     </View>
   );
 }

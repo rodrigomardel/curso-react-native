@@ -1,8 +1,10 @@
-import React from 'react';
-import { StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native';
+import React, { useState } from 'react';
+import { StyleSheet, Text, View, Image, TouchableOpacity, ActivityIndicator } from 'react-native';
 import { commonStyles, colors, typography } from '../styles/common';
 
 export default function GameCard({ game, onPress }) {
+  const [imageLoading, setImageLoading] = useState(true);
+
   return (
     <TouchableOpacity 
       style={styles.cardContainer} 
@@ -13,7 +15,9 @@ export default function GameCard({ game, onPress }) {
         <Image 
           source={{uri: game.image}} 
           style={styles.gameImage}
-          resizeMode="cover"
+          resizeMode="contain" 
+          onLoadStart={() => setImageLoading(true)}
+          onLoadEnd={() => setImageLoading(false)}
         />
         <View style={styles.scoreBadge}>
           <Text style={styles.scoreText}>{game.score}</Text>
