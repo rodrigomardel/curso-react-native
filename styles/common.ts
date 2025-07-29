@@ -1,7 +1,8 @@
-import { StyleSheet } from 'react-native';
+import { StyleSheet, TextStyle, ViewStyle } from 'react-native';
+import { Colors, Typography } from '../types';
 
 // Colores de la aplicación
-export const colors = {
+export const colors: Colors = {
   primary: '#4CAF50',
   secondary: '#FF6B6B',
   accent: '#FFD700',
@@ -19,7 +20,7 @@ export const colors = {
 };
 
 // Tipografías
-export const typography = {
+export const typography: Typography = {
   h1: {
     fontSize: 30,
     fontWeight: 'bold',
@@ -36,14 +37,18 @@ export const typography = {
     fontSize: 18,
     fontWeight: 'bold',
   },
-  body: {
+  bodyText: {
     fontSize: 16,
+    fontWeight: 'normal',
   },
   bodySmall: {
     fontSize: 14,
+    fontWeight: 'normal',
   },
-  caption: {
-    fontSize: 12,
+  errorText: {
+    fontSize: 16,
+    fontWeight: 'normal',
+    color: colors.error,
   },
 };
 
@@ -86,7 +91,7 @@ export const commonStyles = StyleSheet.create({
     marginBottom: 8,
   },
   bodyText: {
-    ...typography.body,
+    ...typography.bodyText,
     color: colors.text,
     lineHeight: 24,
   },
@@ -96,7 +101,7 @@ export const commonStyles = StyleSheet.create({
     lineHeight: 20,
   },
   caption: {
-    ...typography.caption,
+    fontSize: 12,
     color: colors.textLight,
     textAlign: 'center',
   },
@@ -280,20 +285,20 @@ export const componentStyles = {
   touchableHighlightText: {
     color: colors.textWhite,
     fontSize: 16,
-    fontWeight: '600',
-    textAlign: 'center',
+    fontWeight: '600' as const,
+    textAlign: 'center' as const,
   },
   touchableOpacityText: {
     color: colors.textWhite,
     fontSize: 14,
-    fontWeight: '500',
-    textAlign: 'center',
-    textTransform: 'uppercase',
+    fontWeight: '500' as const,
+    textAlign: 'center' as const,
+    textTransform: 'uppercase' as const,
   },
   pressableText: {
     color: colors.text,
     fontSize: 16,
-    fontWeight: '600',
-    textAlign: 'center',
+    fontWeight: '600' as const,
+    textAlign: 'center' as const,
   },
-};
+}; 

@@ -1,8 +1,8 @@
-import * as React from "react"
-import Svg, { Path } from "react-native-svg"
+import * as React from "react";
+import Svg, { Path, SvgProps } from "react-native-svg";
 
-const Logo = (props) => (
-  <Svg xmlns="http://www.w3.org/2000/svg" width={176} height={40} {...props}>
+const Logo: React.FC<SvgProps> = (props) => (
+  <Svg width={176} height={40} {...props}>
     <Path d="M36.978 19.49a17.49 17.49 0 1 1 0-.021" />
     <Path
       fill="#F2F2F2"
@@ -16,4 +16,4 @@ const Logo = (props) => (
   </Svg>
 );
 
-export default Logo;
+export default Logo; 

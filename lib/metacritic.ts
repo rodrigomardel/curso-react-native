@@ -1,4 +1,6 @@
-export async function getLatestGames() {
+import { Game, MetacriticApiResponse, MetacriticGameItem, GameDetails, Review } from '../types';
+
+export async function getLatestGames(): Promise<Game[]> {
   const LATEST_GAMES =
     "https://internal-prod.apigee.fandom.net/v1/xapi/finder/metacritic/web?sortBy=-metaScore&productType=games&page=1&releaseYearMin=1958&releaseYearMax=2024&offset=0&limit=24&apiKey=1MOZgmNFxvmljaQR1X9KAij9Mo4xAY3u";
 
@@ -34,7 +36,7 @@ export async function getLatestGames() {
       throw new Error('API returned non-JSON response');
     }
     
-    const json = await response.json();
+    const json: MetacriticApiResponse = await response.json();
     console.log('Raw JSON response:', json);
     
     if (!json.data || !json.data.items) {
@@ -49,7 +51,7 @@ export async function getLatestGames() {
     console.log('Number of items received:', items.length);
     console.log('First item example:', items[0]);
 
-    const mappedItems = items.map((item) => {
+    const mappedItems: Game[] = items.map((item: MetacriticGameItem) => {
       const { description, slug, releaseDate, image, criticScoreSummary, title } =
         item;
       const { score } = criticScoreSummary;
@@ -78,7 +80,7 @@ export async function getLatestGames() {
 }
 
 // Función con datos de ejemplo para cuando la API no funcione
-function getSampleGames() {
+function getSampleGames(): Game[] {
   return [
     {
       title: "The Legend of Zelda: Breath of the Wild",
@@ -275,7 +277,7 @@ function getSampleGames() {
   ];
 }
 
-export async function getGameDetails(slug) {
+export async function getGameDetails(slug: string): Promise<GameDetails> {
   const GAME_DETAILS = `https://internal-prod.apigee.fandom.net/v1/xapi/composer/metacritic/pages/games/${slug}/web?&apiKey=1MOZgmNFxvmljaQR1X9KAij9Mo4xAY3u`;
 
   const rawData = await fetch(GAME_DETAILS);
@@ -286,14 +288,14 @@ export async function getGameDetails(slug) {
   const { score } = criticScoreSummary;
 
   // get the card image
-  const cardImage = images.find((image) => image.typeName === "cardImage");
+  const cardImage = images.find((image: any) => image.typeName === "cardImage");
   const { bucketType, bucketPath } = cardImage;
   const img = `https://www.metacritic.com/a/img/${bucketType}${bucketPath}`;
 
   const rawReviews = components[3].data.items;
 
   // get the reviews
-  const reviews = rawReviews.map((review) => {
+  const reviews: Review[] = rawReviews.map((review: any) => {
     const { quote, score, date, publicationName, author } = review;
     return { quote, score, date, publicationName, author };
   });
@@ -306,4 +308,4 @@ export async function getGameDetails(slug) {
     score,
     reviews,
   };
-}
+} 

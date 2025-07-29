@@ -1,10 +1,11 @@
+import React from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View, Image, Button, TouchableHighlight, TouchableOpacity, Pressable } from 'react-native';
 import { commonStyles, colors, typography, componentStyles } from '../styles/common';
 
 import icon from '../assets/icon-metacritic.png';
 
-export default function HomeScreen() {
+export default function HomeScreen(): React.JSX.Element {
   return (
     <View style={commonStyles.containerDark}>
       <View style={styles.iconContainer}>
@@ -82,8 +83,8 @@ const styles = StyleSheet.create({
   },
   buttonDescription: {
     color: colors.textLight,
-    ...typography.caption,
+    fontSize: 12,
     marginTop: 5,
     textAlign: 'center',
   },
-});
+}); 

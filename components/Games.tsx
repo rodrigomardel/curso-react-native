@@ -1,16 +1,17 @@
+import React, { useState, useEffect } from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View, ActivityIndicator, TouchableOpacity, ScrollView, FlatList } from 'react-native';
-import { useState, useEffect, useRef } from 'react';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { getLatestGames } from '../lib/metacritic';
 import { commonStyles, colors, typography } from '../styles/common';
 import GameCard, { AnimatedGameCard } from './GameCard';
 import Logo from './Logo';
+import { Game } from '../types';
 
-export default function Games() {
-  const [games, setGames] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+export default function Games(): React.JSX.Element {
+  const [games, setGames] = useState<Game[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
+  const [error, setError] = useState<string | null>(null);
   const insets = useSafeAreaInsets();
   
   useEffect(() => {
@@ -24,7 +25,7 @@ export default function Games() {
         setGames(gamesData);
       } catch (err) {
         console.error('Error fetching games:', err);
-        setError(err.message);
+        setError(err instanceof Error ? err.message : 'Unknown error occurred');
       } finally {
         setLoading(false);
       }
@@ -33,7 +34,7 @@ export default function Games() {
     fetchGames();
   }, []);
 
-  const handleGamePress = (game) => {
+  const handleGamePress = (game: Game) => {
     console.log('Game pressed:', game.title);
     // Agregar navegación a detalles del juego
     alert(`Seleccionaste: ${game.title}\nScore: ${game.score}`);
@@ -79,7 +80,7 @@ export default function Games() {
         keyExtractor={(item) => item.slug}
         renderItem={({ item, index }) => (
         //   <GameCard game={item} onPress={() => handleGamePress(item)} />
-        <AnimatedGameCard game={item} index={index} />
+        <AnimatedGameCard game={item} index={index} onPress={handleGamePress} />
         )}
       />
         {/* {games.length === 0 ? (
@@ -155,4 +156,4 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginTop: 16,
   },
-});
+}); 

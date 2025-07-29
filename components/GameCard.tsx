@@ -1,14 +1,21 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { StyleSheet, Text, View, Image, TouchableOpacity, ActivityIndicator, Animated } from 'react-native';
 import { commonStyles, colors, typography } from '../styles/common';
+import { GameCardProps, AnimatedGameCardProps } from '../types';
 
-export default function GameCard({ game, onPress }) {
-  const [imageLoading, setImageLoading] = useState(true);
+export default function GameCard({ game, onPress }: GameCardProps): React.JSX.Element {
+  const [imageLoading, setImageLoading] = useState<boolean>(true);
+
+  const handlePress = () => {
+    if (onPress) {
+      onPress(game);
+    }
+  };
 
   return (
     <TouchableOpacity 
       style={styles.cardContainer} 
-      onPress={onPress}
+      onPress={handlePress}
       activeOpacity={0.7}
     >
       <View style={styles.imageContainer}>
@@ -41,7 +48,7 @@ export default function GameCard({ game, onPress }) {
   );
 }
 
-export function AnimatedGameCard({ game, index, onPress }) {
+export function AnimatedGameCard({ game, index, onPress }: AnimatedGameCardProps): React.JSX.Element {
   const opacity = useRef(new Animated.Value(0)).current;
 
   useEffect(() => {
@@ -129,4 +136,4 @@ const styles = StyleSheet.create({
     color: colors.text,
     lineHeight: 20,
   },
-});
+}); 
