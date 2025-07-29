@@ -5,6 +5,7 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { getLatestGames } from '../lib/metacritic';
 import { commonStyles, colors, typography } from '../styles/common';
 import GameCard from './GameCard';
+import Logo from './Logo';
 
 export default function Games() {
   const [games, setGames] = useState([]);
@@ -61,6 +62,7 @@ export default function Games() {
   return (
     <View style={[commonStyles.container, { paddingTop: insets.top }]}>
       <StatusBar style="light" />
+      <Logo />
       <View style={styles.header}>
         <Text style={styles.title}>Juegos</Text>
         <Text style={styles.subtitle}>{games.length} juegos disponibles</Text>
