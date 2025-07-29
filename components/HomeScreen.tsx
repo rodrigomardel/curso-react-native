@@ -16,7 +16,7 @@ export default function HomeScreen(): React.JSX.Element {
         <Text style={styles.title}>Curso de React Native Metacritic App</Text>
         {/* Button no se puede estilizar con css */}
         <View style={styles.buttonsContainer}>
-          <Text style={styles.buttonsTitle}>Tipos de Botones en React Native:</Text>
+          <Text style={styles.buttonsTitle}>Tipos de Botones:</Text>
           <View style={styles.buttonContainer}>
             <Button color="fuchsia" title="Button" onPress={() => alert('Button pressed')} />
             <Text style={styles.buttonDescription}>Botón nativo con estilos limitados</Text>
