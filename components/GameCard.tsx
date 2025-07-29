@@ -12,6 +12,59 @@ export default function GameCard({ game, onPress }: GameCardProps): React.JSX.El
     }
   };
 
+  // Función para obtener el color del score
+  const getScoreColor = (score: number) => {
+    if (score >= 75) return '#66CC33'; // Verde
+    if (score >= 50) return '#FFCC33'; // Amarillo
+    return '#FF6B6B'; // Rojo
+  };
+
+  // Función para obtener la descripción del score
+  const getScoreDescription = (score: number) => {
+    if (score >= 75) return 'Generally Favorable';
+    if (score >= 50) return 'Mixed or Average';
+    return 'Generally Unfavorable';
+  };
+
+  // Función para calcular los segmentos de la barra de calificaciones
+  const getRatingBarSegments = (score: number) => {
+    // Normalizar el score a un rango de 0-100
+    const normalizedScore = Math.max(0, Math.min(100, score));
+    
+    // Calcular los segmentos basados en el score
+    let positive = 0;
+    let mixed = 0;
+    let negative = 0;
+    
+    if (normalizedScore >= 75) {
+      // Score alto: mayor parte verde, algo amarillo
+      positive = normalizedScore - 50;
+      mixed = 50 - positive;
+      negative = 0;
+    } else if (normalizedScore >= 50) {
+      // Score medio: mayor parte amarillo, algo verde y rojo
+      positive = normalizedScore - 50;
+      mixed = 50 - positive;
+      negative = 0;
+    } else {
+      // Score bajo: mayor parte rojo, algo amarillo
+      negative = 50 - normalizedScore;
+      mixed = normalizedScore;
+      positive = 0;
+    }
+    
+    // Asegurar que los valores no sean negativos y sumen aproximadamente 100
+    positive = Math.max(0, positive);
+    mixed = Math.max(0, mixed);
+    negative = Math.max(0, negative);
+    
+    return { positive, mixed, negative };
+  };
+
+  const scoreColor = getScoreColor(game.score);
+  const scoreDescription = getScoreDescription(game.score);
+  const ratingSegments = getRatingBarSegments(game.score);
+
   return (
     <TouchableOpacity 
       style={styles.cardContainer} 
@@ -26,23 +79,37 @@ export default function GameCard({ game, onPress }: GameCardProps): React.JSX.El
           onLoadStart={() => setImageLoading(true)}
           onLoadEnd={() => setImageLoading(false)}
         />
-        <View style={styles.scoreBadge}>
-          <Text style={styles.scoreText}>{game.score}</Text>
-        </View>
+        {imageLoading && (
+          <View style={styles.loadingContainer}>
+            <ActivityIndicator size="large" color={colors.primary} />
+          </View>
+        )}
       </View>
+      
       <View style={styles.contentContainer}>
-        <Text style={styles.gameTitle} numberOfLines={1}>
+        <Text style={styles.gameTitle} numberOfLines={2}>
           {game.title}
         </Text>
-        <Text style={styles.releaseDate}>
-          {game.releaseDate}
-        </Text>
-        <Text 
-          style={styles.description} 
-          numberOfLines={2}
-        >
-          {game.description}
-        </Text>
+        
+        <View style={styles.gameTag}>
+          <Text style={styles.gameTagText}>game</Text>
+        </View>
+        
+        <View style={styles.metascoreSection}>
+          <Text style={styles.metascoreLabel}>METASCORE</Text>
+          <Text style={styles.scoreDescription}>{scoreDescription}</Text>
+          <Text style={styles.reviewCount}>Based on 75 Critic Reviews</Text>
+          
+          <View style={[styles.scoreBox, { backgroundColor: scoreColor }]}>
+            <Text style={styles.scoreNumber}>{game.score}</Text>
+          </View>
+        </View>
+        
+        <View style={styles.ratingBar}>
+          <View style={[styles.ratingSegment, styles.positiveSegment, { flex: ratingSegments.positive }]} />
+          <View style={[styles.ratingSegment, styles.mixedSegment, { flex: ratingSegments.mixed }]} />
+          <View style={[styles.ratingSegment, styles.negativeSegment, { flex: ratingSegments.negative }]} />
+        </View>
       </View>
     </TouchableOpacity>
   );
@@ -69,7 +136,7 @@ export function AnimatedGameCard({ game, index, onPress }: AnimatedGameCardProps
 
 const styles = StyleSheet.create({
   cardContainer: {
-    backgroundColor: '#f8f9fa',
+    backgroundColor: colors.background,
     borderRadius: 12,
     marginBottom: 16,
     shadowColor: '#000',
@@ -81,27 +148,101 @@ const styles = StyleSheet.create({
     shadowRadius: 4,
     elevation: 3,
     overflow: 'hidden',
+    borderWidth: 1,
+    borderColor: colors.accent,
   },
   imageContainer: {
     position: 'relative',
     width: '100%',
-    height: 200,
+    height: 180, // Reducido de 200 a 180 para mejor proporción
   },
   gameImage: {
     width: '100%',
     height: '100%',
-    resizeMode: 'contain', 
-    transform: [{ scale: 1.1 }], 
+    backgroundColor: '#f8f9fa', // Color de fondo más suave
   },
-  scoreBadge: {
+  loadingContainer: {
     position: 'absolute',
-    top: 12,
-    right: 12,
-    backgroundColor: colors.primary,
-    borderRadius: 20,
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: colors.background,
+  },
+  titleOverlay: {
+    position: 'absolute',
+    bottom: 0,
+    left: 0,
+    right: 0,
+    padding: 12, // Reducido de 16 a 12
+    backgroundColor: 'rgba(0, 0, 0, 0.7)',
+  },
+  overlayTitle: {
+    color: colors.textWhite,
+    fontSize: 14, // Reducido de 16 a 14
+    fontWeight: 'bold',
+    textShadowColor: 'rgba(0, 0, 0, 0.8)',
+    textShadowOffset: { width: 1, height: 1 },
+    textShadowRadius: 2,
+  },
+  contentContainer: {
+    padding: 16,
+  },
+  gameTitle: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    color: colors.text,
+    marginBottom: 8,
+    lineHeight: 24,
+  },
+  gameTag: {
+    alignSelf: 'flex-start',
+    backgroundColor: '#f0f0f0',
+    borderWidth: 1,
+    borderColor: '#ddd',
+    borderRadius: 4,
     paddingHorizontal: 8,
     paddingVertical: 4,
-    minWidth: 40,
+    marginBottom: 16,
+  },
+  gameTagText: {
+    fontSize: 12,
+    color: colors.text,
+    textTransform: 'lowercase',
+  },
+  metascoreSection: {
+    position: 'relative',
+    marginBottom: 12,
+    paddingRight: 70, // Espacio para la caja de score
+  },
+  metascoreLabel: {
+    fontSize: 10,
+    color: colors.textLight,
+    fontWeight: 'normal',
+    marginBottom: 4,
+    textTransform: 'uppercase',
+  },
+  scoreDescription: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    color: colors.text,
+    marginBottom: 4,
+  },
+  reviewCount: {
+    fontSize: 12,
+    color: colors.text,
+    marginBottom: 8,
+  },
+  scoreBox: {
+    position: 'absolute',
+    right: 0,
+    top: 0,
+    width: 60,
+    height: 60,
+    borderRadius: 8,
+    justifyContent: 'center',
     alignItems: 'center',
     shadowColor: '#000',
     shadowOffset: {
@@ -112,28 +253,29 @@ const styles = StyleSheet.create({
     shadowRadius: 3.84,
     elevation: 5,
   },
-  scoreText: {
+  scoreNumber: {
+    fontSize: 24,
+    fontWeight: 'bold',
     color: colors.textWhite,
-    fontSize: 14,
-    fontWeight: 'bold',
   },
-  contentContainer: {
-    padding: 16,
+  ratingBar: {
+    flexDirection: 'row',
+    height: 6, // Aumentado de 4 a 6 para mejor visibilidad
+    borderRadius: 3,
+    overflow: 'hidden',
+    backgroundColor: '#f0f0f0', // Color de fondo para la barra
   },
-  gameTitle: {
-    ...typography.h4,
-    color: colors.text,
-    marginBottom: 4,
-    fontWeight: 'bold',
+  ratingSegment: {
+    height: '100%',
+    minWidth: 1, // Asegurar que segmentos muy pequeños sean visibles
   },
-  releaseDate: {
-    ...typography.bodySmall,
-    color: colors.textLight,
-    marginBottom: 8,
+  positiveSegment: {
+    backgroundColor: '#66CC33',
   },
-  description: {
-    ...typography.bodySmall,
-    color: colors.text,
-    lineHeight: 20,
+  mixedSegment: {
+    backgroundColor: '#FFCC33',
+  },
+  negativeSegment: {
+    backgroundColor: '#FF6B6B',
   },
 }); 

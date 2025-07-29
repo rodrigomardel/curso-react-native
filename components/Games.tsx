@@ -76,6 +76,7 @@ export default function Games(): React.JSX.Element {
         showsVerticalScrollIndicator={false}
       > */}
       <FlatList
+        style={styles.scrollView}
         data={games}
         keyExtractor={(item) => item.slug}
         renderItem={({ item, index }) => (
@@ -109,7 +110,8 @@ const styles = StyleSheet.create({
     backgroundColor: colors.background,
     borderBottomWidth: 1,
     borderBottomColor: colors.border,
-    alignItems: 'center', // Centra los elementos hijos horizontalmente
+    alignItems: 'center',
+    marginBottom: 10,
   },
   title: {
     ...typography.h2,
@@ -124,6 +126,8 @@ const styles = StyleSheet.create({
   },
   scrollView: {
     flex: 1,
+    paddingHorizontal: 20,
+    paddingVertical: 20,
   },
   scrollContent: {
     paddingHorizontal: 16,
