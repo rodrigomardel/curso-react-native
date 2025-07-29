@@ -1,5 +1,5 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View, FlatList, ActivityIndicator, TouchableOpacity, Image } from 'react-native';
+import { StyleSheet, Text, View, ActivityIndicator, TouchableOpacity, Image, ScrollView } from 'react-native';
 import { useState, useEffect } from 'react';
 import { getLatestGames } from './lib/metacritic';
 
@@ -52,26 +52,28 @@ export default function FetchScreen() {
     <View style={styles.container}>
       <StatusBar style="light" />
       <Text style={styles.title}>Juegos ({games.length})</Text>
-      {games.length === 0 ? (
-        <Text style={styles.noDataText}>No se encontraron juegos</Text>
-      ) : (
-        games.map((game) => {
-          console.log('Rendering game:', game.title, game.score);
-          return (
-            <View key={game.slug} style={styles.card}>
-              <Image source={{uri: game.image}} style={styles.image} />
-              <View style={styles.gameInfo}>
-                <Text style={styles.gameTitle}>{game.title}</Text>
-                <Text style={styles.score}>Score: {game.score}</Text>
-                <Text style={styles.releaseDate}>{game.releaseDate}</Text>
-                <Text style={styles.description} numberOfLines={2}>
-                  {game.description}
-                </Text>
+        <ScrollView>
+        {games.length === 0 ? (
+          <Text style={styles.noDataText}>No se encontraron juegos</Text>
+        ) : (
+          games.map((game) => {
+            console.log('Rendering game:', game.title, game.score);
+            return (
+              <View key={game.slug} style={styles.card}>
+                <Image source={{uri: game.image}} style={styles.image} />
+                <View style={styles.gameInfo}>
+                  <Text style={styles.gameTitle}>{game.title}</Text>
+                  <Text style={styles.score}>Score: {game.score}</Text>
+                  <Text style={styles.releaseDate}>{game.releaseDate}</Text>
+                  <Text style={styles.description} numberOfLines={2}>
+                    {game.description}
+                  </Text>
+                </View>
               </View>
-            </View>
-          );
-        })
-      )}
+            );
+          })
+        )}
+        </ScrollView>
     </View>
   );
 }
@@ -80,7 +82,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
-    padding: 16,
+    padding: 12,
   },
   title: {
     fontSize: 24,
