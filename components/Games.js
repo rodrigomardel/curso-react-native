@@ -1,10 +1,10 @@
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View, ActivityIndicator, TouchableOpacity, ScrollView, FlatList } from 'react-native';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { getLatestGames } from '../lib/metacritic';
 import { commonStyles, colors, typography } from '../styles/common';
-import GameCard from './GameCard';
+import GameCard, { AnimatedGameCard } from './GameCard';
 import Logo from './Logo';
 
 export default function Games() {
@@ -62,10 +62,11 @@ export default function Games() {
   return (
     <View style={[commonStyles.container, { paddingTop: insets.top }]}>
       <StatusBar style="light" />
-      <Logo />
+      <View style={styles.logoContainer}>
+        <Logo />
+      </View>
       <View style={styles.header}>
-        <Text style={styles.title}>Juegos</Text>
-        <Text style={styles.subtitle}>{games.length} juegos disponibles</Text>
+        <Text style={styles.title}>{games.length} juegos disponibles</Text>
       </View>
       {/* Se debe usar FlatList para mostrar los juegos, ya que es más eficiente que ScrollView debido a que no se renderiza todo el contenido de la lista, sino que se renderiza solo el contenido visible.
       <ScrollView 
@@ -75,10 +76,11 @@ export default function Games() {
       > */}
       <FlatList
         data={games}
-        renderItem={({ item }) => (
-          <GameCard game={item} onPress={() => handleGamePress(item)} />
-        )}
         keyExtractor={(item) => item.slug}
+        renderItem={({ item, index }) => (
+        //   <GameCard game={item} onPress={() => handleGamePress(item)} />
+        <AnimatedGameCard game={item} index={index} />
+        )}
       />
         {/* {games.length === 0 ? (
           <View style={styles.emptyContainer}>
@@ -97,6 +99,7 @@ export default function Games() {
     </View>
   );
 }
+
 
 const styles = StyleSheet.create({
   header: {
@@ -147,5 +150,9 @@ const styles = StyleSheet.create({
     fontSize: 16,
     textAlign: 'center',
     color: colors.textLight,
-  }
+  },
+  logoContainer: {
+    alignItems: 'center',
+    marginTop: 16,
+  },
 });

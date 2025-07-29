@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { StyleSheet, Text, View, Image, TouchableOpacity, ActivityIndicator } from 'react-native';
+import React, { useState, useRef, useEffect } from 'react';
+import { StyleSheet, Text, View, Image, TouchableOpacity, ActivityIndicator, Animated } from 'react-native';
 import { commonStyles, colors, typography } from '../styles/common';
 
 export default function GameCard({ game, onPress }) {
@@ -38,6 +38,25 @@ export default function GameCard({ game, onPress }) {
         </Text>
       </View>
     </TouchableOpacity>
+  );
+}
+
+export function AnimatedGameCard({ game, index, onPress }) {
+  const opacity = useRef(new Animated.Value(0)).current;
+
+  useEffect(() => {
+      Animated.timing(opacity, {
+          toValue: 1,
+          duration: 1000,
+          delay: index * 250,
+          useNativeDriver: true,
+      }).start();
+  }, [opacity, index]);
+
+  return (
+      <Animated.View style={{ opacity }}>
+          <GameCard game={game} onPress={onPress} />
+      </Animated.View>
   );
 }
 
