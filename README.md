@@ -101,33 +101,15 @@ expo start --port 19000
 expo logs
 ```
 
-### 🎨 Tailwind CSS con NativeWind
+### Instalación Tailwind CSS
+```bash
+# Instalar nativewind
+npm install nativewind
 
-El proyecto está **completamente configurado** para usar Tailwind CSS con NativeWind:
+# Instalar tailwind CSS
+npm install --save--dev --save-exact tailwindcss@3.3.2
 
-#### ✅ Configuración Incluida:
-- `babel.config.js` - Plugin de NativeWind configurado
-- `tailwind.config.js` - Configuración optimizada para React Native
-- `types/nativewind.d.ts` - Tipos de TypeScript para NativeWind
-- Colores personalizados del tema integrados
+# Iniciar
+npx tailwindcss init
 
-#### 📦 Dependencias Instaladas:
-- `nativewind: "^4.1.23"`
-- `tailwindcss: "3.3.2"`
-
-#### 🚀 Uso Inmediato:
-```tsx
-<View className="flex-1 bg-white p-4">
-  <Text className="text-lg font-bold text-primary">
-    ¡Tailwind funcionando!
-  </Text>
-</View>
 ```
-
-#### 🎨 Colores del Tema Disponibles:
-- `bg-primary`, `text-primary`
-- `bg-secondary`, `text-secondary`
-- `bg-accent`, `text-accent`
-- `bg-error`, `bg-success`, `bg-warning`
-
-**📖 Guía completa:** [TAILWIND_GUIDE.md](./TAILWIND_GUIDE.md)
