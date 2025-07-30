@@ -92,7 +92,7 @@ function getSampleGames(): Game[] {
     },
     {
       title: "Red Dead Redemption 2",
-      score: 96,
+      score: 70,
       releaseDate: "2018-10-26",
       description: "An epic tale of life in America's unforgiving heartland at the dawn of the modern age.",
       slug: "red-dead-redemption-2",
@@ -100,7 +100,7 @@ function getSampleGames(): Game[] {
     },
     {
       title: "God of War",
-      score: 94,
+      score: 40,
       releaseDate: "2018-04-20",
       description: "A new beginning for Kratos as he ventures into the brutal Norse pantheon.",
       slug: "god-of-war-2018",
@@ -116,7 +116,7 @@ function getSampleGames(): Game[] {
     },
     {
       title: "The Witcher 3: Wild Hunt",
-      score: 93,
+      score: 74,
       releaseDate: "2015-05-19",
       description: "An epic role-playing game with a gripping story and vast open world.",
       slug: "witcher-3-wild-hunt",
@@ -124,7 +124,7 @@ function getSampleGames(): Game[] {
     },
     {
       title: "Elden Ring",
-      score: 96,
+      score: 20,
       releaseDate: "2022-02-25",
       description: "An action RPG set in a vast fantasy world created by Hidetaka Miyazaki and George R.R. Martin.",
       slug: "elden-ring",
@@ -252,7 +252,7 @@ function getSampleGames(): Game[] {
     },
     {
       title: "Genshin Impact",
-      score: 84,
+      score: 70,
       releaseDate: "2020-09-28",
       description: "An open-world action RPG that takes place in the fantasy world of Teyvat, where seven elements flow and converge.",
       slug: "genshin-impact",
