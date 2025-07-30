@@ -154,12 +154,12 @@ const styles = StyleSheet.create({
   imageContainer: {
     position: 'relative',
     width: '100%',
-    height: 180, // Reducido de 200 a 180 para mejor proporción
+    height: 180, 
   },
   gameImage: {
     width: '100%',
     height: '100%',
-    backgroundColor: '#f8f9fa', // Color de fondo más suave
+    backgroundColor: '#e9ecef', 
   },
   loadingContainer: {
     position: 'absolute',

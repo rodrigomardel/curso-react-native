@@ -117,17 +117,17 @@ const styles = StyleSheet.create({
     ...typography.h2,
     color: colors.text,
     marginBottom: 4,
-    textAlign: 'center', // Centra el texto del título
+    textAlign: 'center', 
   },
   subtitle: {
     ...typography.bodySmall,
     color: colors.textLight,
-    textAlign: 'center', // Centra el texto del subtítulo
+    textAlign: 'center',
   },
   scrollView: {
     flex: 1,
     paddingHorizontal: 20,
-    paddingVertical: 20,
+    paddingVertical: 20 ,
   },
   scrollContent: {
     paddingHorizontal: 16,
