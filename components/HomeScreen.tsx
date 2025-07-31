@@ -13,7 +13,7 @@ export default function HomeScreen(): React.JSX.Element {
       </View>
       <View style={commonStyles.centerContainer}>
         <Image source={{uri: 'https://i0.wp.com/www.gammaminus.com/wp-content/uploads/2023/11/metacriticthumb-1.jpg?fit=500%2C500&ssl=1'}} style={commonStyles.imageLarge}/>
-        <Text style={styles.title}>Curso de React Native Metacritic App</Text>
+        <Text style={styles.title}>Curso de React Native App</Text>
         {/* Button no se puede estilizar con css */}
         <View style={styles.buttonsContainer}>
           <Text style={styles.buttonsTitle}>Tipos de Botones:</Text>

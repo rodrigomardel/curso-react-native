@@ -6,6 +6,8 @@ export interface Game {
   description: string;
   slug: string;
   image: string;
+  createdAt?: string;
+  updatedAt?: string;
 }
 
 // Tipos para la respuesta de la API

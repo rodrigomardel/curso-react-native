@@ -13,21 +13,24 @@
       "backgroundColor": "#ffffff"
     },
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.yourcompany.metacriticapp"
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "edgeToEdgeEnabled": true
+      "edgeToEdgeEnabled": true,
+      "package": "com.yourcompany.metacriticapp"
     },
     "web": {
       "favicon": "./assets/favicon.png"
     },
     "scheme": "metacritic-app",
     "plugins": [
-      "expo-router"
+      "expo-router",
+      "expo-dev-client"
     ]
   }
 }
